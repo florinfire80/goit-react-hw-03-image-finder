@@ -8,7 +8,7 @@ const ImageGallery = ({ images }) => {
     <ul className={styles['imageGallery']}>
       {images.map(image => (
         <li key={image.id}>
-          <img src={image.webformatURL} alt={`Pixabay Image ${image.id}`} />
+          <img src={image.webformatURL} alt={`Pixabay ${image.id}`} />
         </li>
       ))}
     </ul>

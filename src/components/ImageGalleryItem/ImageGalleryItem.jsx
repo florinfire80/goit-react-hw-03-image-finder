@@ -8,14 +8,6 @@ import styles from './ImageGalleryItem.module.css';
 const ImageGalleryItem = ({ webformatURL, largeImageURL, altText }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const lightboxInstance = basicLightbox.create(`
-    <div class="overlay">
-      <div class="modal">
-        <img src="${largeImageURL}" alt="${altText}" />
-      </div>
-    </div>
-  `);
-
   const handleImageClick = () => {
     const instance = basicLightbox.create(`
       <div class="overlay">
