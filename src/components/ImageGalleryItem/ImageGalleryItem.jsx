@@ -1,40 +1,102 @@
-// ImageGalleryItem.jsx
-
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import CustomModal from '../Modal/Modal';
 import styles from './ImageGalleryItem.module.css';
 
-const ImageGalleryItem = ({ webformatURL, largeImageURL, altText }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+class ImageGalleryItem extends Component {
+  render() {
+    const { webformatURL, largeImageURL, altText } = this.props;
 
-  const handleImageClick = () => {
-    setIsModalOpen(true);
-  };
-
-  return (
-    <li className={styles['gallery-item']}>
-      <img
-        className={styles['gallery-item-image']}
-        src={webformatURL}
-        alt={altText}
-        onClick={handleImageClick}
-      />
-      {
-        <CustomModal
-          isOpen={isModalOpen}
-          onRequestClose={() => setIsModalOpen(false)}
-          webformatURL={webformatURL}
-          largeImageURL={largeImageURL}
-          altText={altText}
+    return (
+      <li className={styles['gallery-item']} onClick={this.openModal}>
+        <img
+          className={styles['gallery-item-image']}
+          src={webformatURL}
+          alt={altText}
         />
-      }
-    </li>
-  );
-};
+
+        {this.state.isOpen && (
+          <CustomModal
+            isOpen={this.state.isOpen}
+            onRequestClose={this.closeModal}
+            webformatURL={webformatURL}
+            largeImageURL={largeImageURL}
+            altText={altText}
+          />
+        )}
+      </li>
+    );
+  }
+}
 
 export default ImageGalleryItem;
 
-// ===========================
+// =========================================
+// import React, { Component } from 'react';
+// import basicLightbox from 'basiclightbox';
+// import CustomModal from '../Modal/Modal';
+// import styles from './ImageGalleryItem.module.css';
+
+// class ImageGalleryItem extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       modalIsOpen: false,
+//     };
+//   }
+
+//   handleImageClick = () => {
+//     this.setState({ modalIsOpen: true });
+
+//     this.instance = basicLightbox.create(`
+//       <div class="overlay">
+//         <div class="modal">
+//           <img src="${this.props.largeImageURL}" alt="${this.props.altText}" />
+//         </div>
+//       </div>
+//     `);
+
+//     this.instance.show();
+//   };
+
+//   handleCloseModal = () => {
+//     this.setState({ modalIsOpen: false });
+//   };
+
+//   componentWillUnmount() {
+//     if (this.instance) {
+//       this.instance.close();
+//     }
+//   }
+
+//   render() {
+//     const { webformatURL, largeImageURL, altText } = this.props;
+//     const { modalIsOpen } = this.state;
+
+//     return (
+//       <li className={styles['gallery-item']}>
+//         <img
+//           className={styles['gallery-item-image']}
+//           src={webformatURL}
+//           alt={altText}
+//           onClick={this.handleImageClick}
+//         />
+//         {modalIsOpen && (
+//           <CustomModal
+//             isOpen={modalIsOpen}
+//             onRequestClose={this.handleCloseModal}
+//             webformatURL={webformatURL}
+//             largeImageURL={largeImageURL}
+//             altText={altText}
+//           />
+//         )}
+//       </li>
+//     );
+//   }
+// }
+
+// export default ImageGalleryItem;
+
+// ===========================================
 // import React, { useState } from 'react';
 // import basicLightbox from 'basiclightbox';
 // import CustomModal from '../Modal/Modal';
@@ -44,6 +106,8 @@ export default ImageGalleryItem;
 //   const [modalIsOpen, setModalIsOpen] = useState(false);
 
 //   const handleImageClick = () => {
+//     setModalIsOpen(true);
+
 //     const instance = basicLightbox.create(`
 //       <div class="overlay">
 //         <div class="modal">
@@ -53,8 +117,6 @@ export default ImageGalleryItem;
 //     `);
 
 //     instance.show();
-
-//     setModalIsOpen(true);
 //   };
 
 //   const handleCloseModal = () => {
@@ -69,7 +131,7 @@ export default ImageGalleryItem;
 //         alt={altText}
 //         onClick={handleImageClick}
 //       />
-//       {
+//       {modalIsOpen && ( // Aici verificăm dacă modalIsOpen este true
 //         <CustomModal
 //           isOpen={modalIsOpen}
 //           onRequestClose={handleCloseModal}
@@ -77,7 +139,7 @@ export default ImageGalleryItem;
 //           largeImageURL={largeImageURL}
 //           altText={altText}
 //         />
-//       }
+//       )}
 //     </li>
 //   );
 // };
