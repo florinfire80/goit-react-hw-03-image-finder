@@ -4,6 +4,12 @@ import basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 
 class CustomModal extends Component {
+  constructor(props) {
+    super(props);
+    this.closeModal = this.closeModal.bind(this);
+    this.createModal = this.createModal.bind(this);
+  }
+
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
     this.createModal();
@@ -35,6 +41,8 @@ class CustomModal extends Component {
   createModal = () => {
     const { largeImageURL, altText } = this.props;
 
+    console.dir(basicLightbox);
+
     this.instance = basicLightbox.create(`
       <div class="overlay" onClick="${this.props.onRequestClose}">
         <div class="modal">
@@ -42,6 +50,8 @@ class CustomModal extends Component {
         </div>
       </div>
     `);
+
+    this.render(this.instance);
   };
 
   destroyModal = () => {

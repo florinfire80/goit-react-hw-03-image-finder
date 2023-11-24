@@ -1,13 +1,13 @@
 // ImageGalleryItem.js
 import React, { useState, useEffect } from 'react';
-import CustomModal from '../Modal/CustomModal';
 import styles from './ImageGalleryItem.module.css';
+import ImageModal from 'components/Modal/ImageModal';
 
 const ImageGalleryItem = ({ webformatURL, largeImageURL, altText }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleImageClick = () => {
-    setIsOpen(prevState => !prevState);
+    setIsOpen(!isOpen);
   };
 
   useEffect(() => {
@@ -23,10 +23,9 @@ const ImageGalleryItem = ({ webformatURL, largeImageURL, altText }) => {
       />
 
       {isOpen && (
-        <CustomModal
+        <ImageModal
           isOpen={isOpen}
           onRequestClose={handleImageClick}
-          webformatURL={webformatURL}
           largeImageURL={largeImageURL}
           altText={altText}
         />
