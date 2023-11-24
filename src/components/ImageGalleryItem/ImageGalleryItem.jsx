@@ -1,34 +1,87 @@
-import React, { Component } from 'react';
-import CustomModal from '../Modal/Modal';
+// ImageGalleryItem.js
+import React, { useState, useEffect } from 'react';
+import CustomModal from '../Modal/CustomModal';
 import styles from './ImageGalleryItem.module.css';
 
-class ImageGalleryItem extends Component {
-  render() {
-    const { webformatURL, largeImageURL, altText } = this.props;
+const ImageGalleryItem = ({ webformatURL, largeImageURL, altText }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-    return (
-      <li className={styles['gallery-item']} onClick={this.openModal}>
-        <img
-          className={styles['gallery-item-image']}
-          src={webformatURL}
-          alt={altText}
+  const handleImageClick = () => {
+    setIsOpen(prevState => !prevState);
+  };
+
+  useEffect(() => {
+    console.log('Starea modalului a fost schimbată:', isOpen);
+  }, [isOpen]);
+
+  return (
+    <li className={styles['gallery-item']} onClick={handleImageClick}>
+      <img
+        className={styles['gallery-item-image']}
+        src={webformatURL}
+        alt={altText}
+      />
+
+      {isOpen && (
+        <CustomModal
+          isOpen={isOpen}
+          onRequestClose={handleImageClick}
+          webformatURL={webformatURL}
+          largeImageURL={largeImageURL}
+          altText={altText}
         />
-
-        {this.state.isOpen && (
-          <CustomModal
-            isOpen={this.state.isOpen}
-            onRequestClose={this.closeModal}
-            webformatURL={webformatURL}
-            largeImageURL={largeImageURL}
-            altText={altText}
-          />
-        )}
-      </li>
-    );
-  }
-}
+      )}
+    </li>
+  );
+};
 
 export default ImageGalleryItem;
+
+// ==================================
+// import React, { Component } from 'react';
+// import CustomModal from '../Modal/Modal';
+// import styles from './ImageGalleryItem.module.css';
+
+// class ImageGalleryItem extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       isOpen: false,
+//     };
+//   }
+
+//   handleImageClick = () => {
+//     this.setState(prevState => ({
+//       isOpen: !prevState.isOpen,
+//     }));
+//   };
+
+//   render() {
+//     const { webformatURL, largeImageURL, altText } = this.props;
+
+//     return (
+//       <li className={styles['gallery-item']} onClick={this.handleImageClick}>
+//         <img
+//           className={styles['gallery-item-image']}
+//           src={webformatURL}
+//           alt={altText}
+//         />
+
+//         {this.state.isOpen && (
+//           <CustomModal
+//             isOpen={this.state.isOpen}
+//             onRequestClose={this.handleImageClick}
+//             webformatURL={webformatURL}
+//             largeImageURL={largeImageURL}
+//             altText={altText}
+//           />
+//         )}
+//       </li>
+//     );
+//   }
+// }
+
+// export default ImageGalleryItem;
 
 // =========================================
 // import React, { Component } from 'react';

@@ -1,47 +1,47 @@
 // Modal.jsx
-
 import React, { Component } from 'react';
 import basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 
 class CustomModal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false,
-    };
-  }
-
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
+    this.createModal();
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown);
+    this.destroyModal();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isOpen !== this.props.isOpen) {
+      if (this.props.isOpen) {
+        this.openModal();
+      } else {
+        this.closeModal();
+      }
+    }
   }
 
   openModal = () => {
-    this.setState({ isOpen: true });
-    this.createModal();
+    this.instance.show();
   };
 
   closeModal = () => {
-    this.setState({ isOpen: false });
-    this.destroyModal();
+    this.instance.close();
   };
 
   createModal = () => {
     const { largeImageURL, altText } = this.props;
 
     this.instance = basicLightbox.create(`
-      <div class="overlay" onClick="${this.closeModal}">
+      <div class="overlay" onClick="${this.props.onRequestClose}">
         <div class="modal">
           <img src="${largeImageURL}" alt="${altText}" />
         </div>
       </div>
     `);
-
-    this.instance.show();
   };
 
   destroyModal = () => {
@@ -52,7 +52,7 @@ class CustomModal extends Component {
 
   handleKeyDown = e => {
     if (e.key === 'Escape') {
-      this.closeModal();
+      this.props.onRequestClose();
     }
   };
 
