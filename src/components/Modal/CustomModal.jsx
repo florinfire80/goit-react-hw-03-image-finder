@@ -1,7 +1,6 @@
 // CustomModal.jsx
-import React, { Component } from 'react';
+import { Component } from 'react';
 import basicLightbox from 'basiclightbox';
-import 'basiclightbox/dist/basicLightbox.min.css';
 
 class CustomModal extends Component {
   constructor(props) {
